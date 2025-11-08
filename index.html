@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherStorm - Database Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Verdana, Arial, sans-serif;
+            background: #e8e8e8;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            background: linear-gradient(to bottom, #4a90e2, #2e5c8a);
+            color: white;
+            padding: 8px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            font-size: 11px;
+        }
+
+        .top-bar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            border: 1px solid #c0c0c0;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            padding: 0;
+        }
+
+        .header-title {
+            background: linear-gradient(to bottom, #5a9fd4, #4a90e2);
+            color: white;
+            padding: 15px 20px;
+            border-bottom: 2px solid #2e5c8a;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-title .logo {
+            font-size: 2em;
+        }
+
+        .header-title h1 {
+            font-size: 1.8em;
+            font-weight: normal;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .header-content {
+            padding: 25px;
+            background: #f5f5f5;
+        }
+
+        .tagline {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .description {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(to bottom, #f0f0f0, #d0d0d0);
+            color: #333;
+            text-decoration: none;
+            border: 1px solid #999;
+            border-radius: 3px;
+            font-size: 0.9em;
+            font-weight: bold;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+
+        .button:hover {
+            background: linear-gradient(to bottom, #fff, #e0e0e0);
+            border-color: #666;
+        }
+
+        .button:active {
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .button-primary {
+            background: linear-gradient(to bottom, #6ba3d4, #4a90e2);
+            color: white;
+            border-color: #2e5c8a;
+        }
+
+        .button-primary:hover {
+            background: linear-gradient(to bottom, #7bb3e4, #5a9fd4);
+        }
+
+        .button-secondary {
+            background: linear-gradient(to bottom, #9b88c4, #7e6baa);
+            color: white;
+            border-color: #5e4a7e;
+        }
+
+        .button-secondary:hover {
+            background: linear-gradient(to bottom, #ab98d4, #8e7bba);
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #c0c0c0;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .panel-header {
+            background: linear-gradient(to bottom, #f5f5f5, #e0e0e0);
+            padding: 10px 15px;
+            border-bottom: 1px solid #c0c0c0;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-content {
+            padding: 20px;
+        }
+
+        .warning-panel {
+            border-color: #ff9800;
+            border-width: 2px;
+        }
+
+        .warning-panel .panel-header {
+            background: linear-gradient(to bottom, #fff3cd, #ffe69c);
+            color: #856404;
+            border-bottom-color: #ff9800;
+        }
+
+        .warning-panel .panel-content {
+            background: #fffbf0;
+        }
+
+        .feature-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .feature-table th {
+            background: linear-gradient(to bottom, #e8e8e8, #d0d0d0);
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #c0c0c0;
+            font-size: 0.9em;
+        }
+
+        .feature-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            font-size: 0.9em;
+        }
+
+        .feature-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .feature-table tr:hover {
+            background: #e8f4f8;
+        }
+
+        .info-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        .info-list li:before {
+            content: "▸";
+            position: absolute;
+            left: 5px;
+            color: #4a90e2;
+            font-weight: bold;
+        }
+
+        .author-box {
+            display: inline-block;
+            background: #f5f5f5;
+            border: 1px solid #c0c0c0;
+            padding: 15px 25px;
+            margin: 10px;
+            text-align: center;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .author-box a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .author-box a:hover {
+            text-decoration: underline;
+        }
+
+        .author-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            border: 3px solid #c0c0c0;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .author-role {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #c0c0c0;
+            background: #f5f5f5;
+            margin-top: 30px;
+        }
+
+        .section-icon {
+            font-size: 1.2em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header-title h1 {
+                font-size: 1.3em;
+            }
+
+            .panel-content {
+                padding: 15px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-content">
+            <span>CipherStorm</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="header-title">
+                <h1>CipherStorm</h1>
+            </div>
+            <div class="header-content">
+                <div class="tagline">Secure Database Management for Public Safety Operations</div>
+                <div class="description">
+                    A comprehensive database solution designed for law enforcement and security professionals 
+                    to track and document individuals who pose threats to society and online safety. 
+                    CipherStorm provides reliable data storage, quick retrieval, and secure access control 
+                    for critical information management.
+                </div>
+                <div class="button-group">
+                    <a href="https://github.com/absolutegoaat/CipherStorm" class="button button-primary">Download Web Application</a>
+                    <a href="https://github.com/absolutegoaat/CipherView" class="button button-secondary">Download Desktop Client</a>
+                    <a href="https://github.com/absolutegoaat/CipherStorm/blob/main/api/README.md" class="button">View Documentation</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>System Overview</span>
+            </div>
+            <div class="panel-content">
+                <p style="margin-bottom: 15px;">
+                    CipherStorm makes it easy to look back at the information you've stored and find the data 
+                    you need at a moment's notice. Whether tracking predators, extremists, terrorists, or other 
+                    dangerous individuals, CipherStorm ensures critical information is always accessible when needed.
+                </p>
+                <p>
+                    Built on MySQL database technology with a developer-friendly API, CipherStorm combines 
+                    enterprise-grade reliability with ease of use. The system is designed for both web-based 
+                    access and desktop deployment through our CipherView application.
+                </p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>System Features & Capabilities</span>
+            </div>
+            <div class="panel-content">
+                <table class="feature-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>MySQL Database</strong></td>
+                            <td>Industry-standard relational database backend</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personal Information Storage</strong></td>
+                            <td>Names, addresses, phone numbers</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Network Information</strong></td>
+                            <td>IP address tracking and logging</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conviction Records</strong></td>
+                            <td>Criminal history and conviction data</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Description Fields</strong></td>
+                            <td>Detailed text descriptions and notes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Label System</strong></td>
+                            <td>Quick-reference tags for categorization</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Image Storage</strong></td>
+                            <td>Photo and visual identification storage</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Developer API</strong></td>
+                            <td>RESTful API for third-party integration</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>CipherView Desktop Application</span>
+            </div>
+            <div class="panel-content">
+                <p style="margin-bottom: 15px;">
+                    <strong>CipherView</strong> is the official desktop client for CipherStorm. This standalone 
+                    application provides direct access to your CipherStorm database from your local workstation.
+                </p>
+                <ul class="info-list">
+                    <li>Native desktop interface for Windows, macOS, and Linux</li>
+                    <li>Direct database connectivity</li>
+                    <li>Offline capability for viewing cached records</li>
+                    <li>Currently in active development</li>
+                </ul>
+                <div style="margin-top: 20px;">
+                    <a href="https://github.com/absolutegoaat/CipherView" class="button button-secondary">View CipherView Repository →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>Development Team</span>
+            </div>
+            <div class="panel-content">
+                <div style="display: flex; align-items: center; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                    <div class="author-box">
+                        <img class="author-icon" src="https://avatars.githubusercontent.com/u/212649737?v=4" alt="absolutegoaat">
+                        <a href="https://github.com/absolutegoaat" target="_blank">@absolutegoaat</a>
+                        <div class="author-role">Lead Developer</div>
+                    </div>
+                    <div class="author-box">
+                        <img class="author-icon" src="https://avatars.githubusercontent.com/u/146401816?v=4" alt="NullClock">
+                        <a href="https://github.com/nullclock" target="_blank">@NullClock</a>
+                        <div class="author-role">Core Contributor</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>Contributing to CipherStorm</span>
+            </div>
+            <div class="panel-content">
+                <p style="margin-bottom: 15px;">
+                    We welcome contributions from qualified developers. To contribute:
+                </p>
+                <ul class="info-list">
+                    <li>Fork the repository on GitHub</li>
+                    <li>Create a feature branch for your changes</li>
+                    <li>Make your improvements or bug fixes</li>
+                    <li>Test thoroughly before submitting</li>
+                    <li>Open a Pull Request with detailed description</li>
+                    <li>Wait for code review and approval</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header">
+                <span>Support & Issue Reporting</span>
+            </div>
+            <div class="panel-content">
+                <p style="margin-bottom: 15px;">
+                    Encountering technical issues or have questions? Our support channels:
+                </p>
+                <ul class="info-list">
+                    <li>Open an issue on the GitHub repository</li>
+                    <li>Include detailed error messages and logs</li>
+                    <li>Describe steps to reproduce the problem</li>
+                    <li>Community members and maintainers will respond promptly</li>
+                </ul>
+                <div style="margin-top: 20px;">
+                    <a href="https://github.com/absolutegoaat/CipherStorm/issues" class="button">Report an Issue</a>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div>
+                © 2025 Blazar Systems | Licensed under MIT license
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
